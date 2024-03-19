@@ -111,6 +111,7 @@ null_operation : IS [NOT] NULL
 
 
 // INSERT
+insert_query : INSERT 
 
 // DELETE
 
