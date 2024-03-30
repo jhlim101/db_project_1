@@ -47,6 +47,8 @@ INSERT : "insert"i
 INTO : "into"i
 VALUES : "values"i
 DELETE : "delete"i
+UPDATE : "update"i
+SET : "set"i
 LESSTHAN : "<"
 LESSEQUAL : "<="
 GREATERTHAN: ">"
@@ -64,6 +66,9 @@ query : create_table_query
       | describe_query
       | desc_query
       | insert_query
+      | show_tables_query
+      | delete_query
+      | update_query
 
 // CREATE TABLE
 create_table_query : CREATE TABLE table_name table_element_list
@@ -82,7 +87,6 @@ data_type : TYPE_INT
           | TYPE_DATE
 table_name : IDENTIFIER
 column_name : IDENTIFIER
-
 
 // DROP TABLE, EXPLAIN, DESCRIBE, DESC, SHOW TABLES
 drop_table_query : DROP TABLE table_name
@@ -119,9 +123,14 @@ null_operation : IS [NOT] NULL
 
 
 // INSERT
-insert_query : INSERT INTO table_name [table_element_list] VALUES values
-values : 
+insert_query : INSERT INTO table_name [column_name_list] VALUES values_list
+values_list : LP table_value ("," table_value)* RP
+table_value : INT | STR | DATE | NULL
 
 // DELETE
+delete_query : DELETE FROM table_name [where_clause]
 
 // UPDATE TABLES
+update_query : UPDATE table_name SET column_name EQUAL comparable_value [where_clause]
+
+
